@@ -2,6 +2,11 @@ from kafka import KafkaConsumer
 from redis import Redis
 import json
 import os
+import logging
+
+# Configurar Logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logger = logging.getLogger(__name__)
 
 # Configurar Redis
 redis = Redis(host='redis', db=0)
@@ -14,7 +19,7 @@ consumer = KafkaConsumer(
     value_deserializer=lambda x: json.loads(x.decode('utf-8'))
 )
 
-print("Kafka consumer ready to receive messages...")
+logger.info("Kafka consumer iniciado y escuchando el tópico 'votes'...")
 
 for message in consumer:
     data = message.value
