@@ -19,7 +19,7 @@ app.logger.setLevel(logging.INFO)
 
 # Configurar el productor de Kafka
 producer = KafkaProducer(
-    bootstrap_servers='54.164.86.184:9092',  # IP de tu broker Kafka
+    bootstrap_servers='52.55.12.87:9092',  # IP de tu broker Kafka
     value_serializer=lambda v: json.dumps(v).encode('utf-8')
 )
 
@@ -43,9 +43,6 @@ def hello():
         producer.send('votes', value=data)
         producer.flush()
 
-        # Almacenar el voto en Redis
-        redis.rpush('votes', json.dumps(data))
-
     resp = make_response(render_template(
         'index.html',
         option_a=option_a,
@@ -65,7 +62,7 @@ def get_redis_data():
 def get_kafka_data():
     consumer = KafkaConsumer(
         'votes',
-        bootstrap_servers='54.164.86.184:9092',
+        bootstrap_servers='52.55.12.87:9092',
         auto_offset_reset='earliest',
         enable_auto_commit=True,
         group_id='my-group',
