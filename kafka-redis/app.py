@@ -9,7 +9,7 @@ redis = Redis(host='redis', db=0)
 # Configurar Kafka Consumer
 consumer = KafkaConsumer(
     'votes',
-    bootstrap_servers='54.164.86.184:9092',
+    bootstrap_servers='3.86.34.96:9092',
     value_deserializer=lambda x: json.loads(x.decode('utf-8'))
 )
 
