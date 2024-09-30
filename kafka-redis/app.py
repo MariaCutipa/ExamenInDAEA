@@ -14,6 +14,8 @@ consumer = KafkaConsumer(
     value_deserializer=lambda x: json.loads(x.decode('utf-8'))
 )
 
+print("Kafka consumer ready to receive messages...")
+
 for message in consumer:
     data = message.value
     voter_id = data['voter_id']
