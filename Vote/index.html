@@ -22,7 +22,7 @@
             <div id="hostname">Processed by container ID {{hostname}}</div>
             <div id="recommendations-container">
                 <h4>Recomendaciones de Películas:</h4>
-                <div id="message" style="color: green;"></div> <!-- Mensaje de éxito -->
+                <div id="message" style="color: green;"></div>
                 <table id="recommendations-table">
                     <thead>
                         <tr>
@@ -35,6 +35,15 @@
                         <!-- Las recomendaciones se agregarán aquí -->
                     </tbody>
                 </table>
+            </div>
+
+            <div id="kafka-container">
+                <h4>Datos de Kafka:</h4>
+                <pre id="kafka-data"></pre>
+            </div>
+            <div id="redis-container">
+                <h4>Datos de Redis:</h4>
+                <pre id="redis-data"></pre>
             </div>
         </div>
     </div>
@@ -63,7 +72,7 @@
         // Función para cargar recomendaciones desde la API
         function loadRecommendations() {
             var userId = 14; // ID del usuario que quieres consultar
-            var apiUrl = 'http://192.168.0.13:5000/recommendations/' + userId; // Cambia 'api' al nombre de tu servicio
+            var apiUrl = 'http://192.168.0.13:5000/recommendations/' + userId;
 
             $.get(apiUrl, function(data) {
                 var tableBody = $('#recommendations-table tbody');
@@ -75,19 +84,45 @@
                     data.forEach(function(item) {
                         tableBody.append('<tr><td>' + item.Title + '</td><td>' + item.Rating + '</td><td>' + item.MovieID + '</td></tr>');
                     });
-                    $('#message').text('Se encontraron ' + data.length + ' recomendaciones.'); // Mensaje de éxito
+                    $('#message').text('Se encontraron ' + data.length + ' recomendaciones.');
                 } else {
-                    $('#message').text('No se encontraron recomendaciones.'); // Mensaje si no hay datos
+                    $('#message').text('No se encontraron recomendaciones.');
                 }
             }).fail(function() {
                 console.error('Error al cargar las recomendaciones');
-                $('#message').text('Error al cargar las recomendaciones.'); // Mensaje de error
+                $('#message').text('Error al cargar las recomendaciones.');
             });
         }
 
-        // Cargar recomendaciones al cargar la página
+        // Función para cargar datos de Redis
+        function loadRedisData() {
+            $.get('/redis_data', function(data) {
+                $('#redis-data').text(JSON.stringify(data, null, 2));
+            }).fail(function() {
+                console.error('Error al cargar datos de Redis');
+                $('#redis-data').text('Error al cargar datos de Redis');
+            });
+        }
+
+        // Función para cargar datos de Kafka
+        function loadKafkaData() {
+            $.get('/kafka_data', function(data) {
+                $('#kafka-data').text(JSON.stringify(data, null, 2));
+            }).fail(function() {
+                console.error('Error al cargar datos de Kafka');
+                $('#kafka-data').text('Error al cargar datos de Kafka');
+            });
+        }
+
+        // Cargar datos al cargar la página y cada 5 segundos
         $(document).ready(function() {
             loadRecommendations();
+            loadRedisData();
+            loadKafkaData();
+            setInterval(function() {
+                loadRedisData();
+                loadKafkaData();
+            }, 2000); // Actualiza cada 5 segundos
         });
     </script>
 </body>
