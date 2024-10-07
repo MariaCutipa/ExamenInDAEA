@@ -19,7 +19,7 @@ app.logger.setLevel(logging.INFO)
 
 # Configurar el productor de Kafka
 producer = KafkaProducer(
-    bootstrap_servers='3.86.81.75:9092',  # IP de tu broker Kafka
+    bootstrap_servers='54.211.27.221:9092',  # IP de tu broker Kafka
     value_serializer=lambda v: json.dumps(v).encode('utf-8')
 )
 
@@ -63,7 +63,7 @@ def get_kafka_data():
     try:
         consumer = KafkaConsumer(
             'votes',
-            bootstrap_servers='3.86.81.75:9092',
+            bootstrap_servers='54.211.27.221:9092',
             auto_offset_reset='earliest',
             enable_auto_commit=True,
             group_id='my-group',
