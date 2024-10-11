@@ -12,7 +12,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY app.py ./
 
 # Establecer las variables de entorno para Kafka y Redis (opcional)
-ENV KAFKA_SERVERS=54.211.27.221:9092
+ENV KAFKA_SERVERS=44.212.65.45:9092
 ENV REDIS_HOST=redis
 
 # Comando para ejecutar la aplicación
