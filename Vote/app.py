@@ -19,7 +19,7 @@ app.logger.setLevel(logging.INFO)
 
 # Configurar el productor de Kafka
 producer = KafkaProducer(
-    bootstrap_servers='44.212.65.45:9092',  # IP de tu broker Kafka
+    bootstrap_servers='44.211.43.47:9092',  # IP de tu broker Kafka
     value_serializer=lambda v: json.dumps(v).encode('utf-8')
 )
 
