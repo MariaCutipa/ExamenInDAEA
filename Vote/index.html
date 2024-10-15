@@ -104,21 +104,10 @@
             });
         }
 
-        // Función para cargar datos de Kafka
-        function loadKafkaData() {
-            $.get('/kafka_data', function(data) {
-                $('#kafka-data').text(JSON.stringify(data, null, 2));
-            }).fail(function() {
-                console.error('Error al cargar datos de Kafka');
-                $('#kafka-data').text('Error al cargar datos de Kafka');
-            });
-        }
-
         // Cargar datos al cargar la página y cada 5 segundos
         $(document).ready(function() {
             loadRecommendations();
             loadRedisData();
-            loadKafkaData();
             setInterval(function() {
                 loadRedisData();
                 loadKafkaData();
