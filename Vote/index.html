@@ -72,7 +72,7 @@
         // Función para cargar recomendaciones desde la API
         function loadRecommendations() {
             var userId = 14; // ID del usuario que quieres consultar
-            var apiUrl = 'http://ip172-18-0-47-cs1ir82im2rg00du5u80-5000.direct.labs.play-with-docker.com/recommendations/' + userId;
+            var apiUrl = 'ec2-54-164-120-0.compute-1.amazonaws.com:5000/recommendations/' + userId;
 
             $.get(apiUrl, function(data) {
                 var tableBody = $('#recommendations-table tbody');
