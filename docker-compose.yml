@@ -1,0 +1,44 @@
+version: '3'
+
+services:
+  manhattan:
+    build:
+      context: ./ExamenInDAEA/manhattan
+    container_name: mi-python-re
+    networks:
+      - mi_red
+    ports:
+      - "5000:5000"
+
+  redis:
+    image: redis:alpine
+    container_name: redis
+    networks:
+      - mi_red
+    ports:
+      - "6379:6379"
+
+  vote:
+    build:
+      context: ./example-voting-app/vote
+    container_name: mi_flask
+    networks:
+      - mi_red
+    ports:
+      - "8080:80"
+    depends_on:
+      - redis
+      - manhattan
+
+  kafka-redis:
+    build:
+      context: ./ExamenInDAEA/kafka-redis
+    container_name: KafkaRedis
+    networks:
+      - mi_red
+    depends_on:
+      - redis
+
+networks:
+  mi_red:
+    driver: bridge
