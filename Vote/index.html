@@ -35,11 +35,7 @@
                         <!-- Las recomendaciones se agregarán aquí -->
                     </tbody>
                 </table>
-            </div>
-
-            <div id="kafka-container">
-                <h4>Datos de Kafka:</h4>
-                <pre id="kafka-data"></pre>
+                <div id="loading-time" style="margin-top: 10px; color: blue;"></div>
             </div>
             <div id="redis-container">
                 <h4>Datos de Redis:</h4>
@@ -72,7 +68,11 @@
         // Función para cargar recomendaciones desde la API
         function loadRecommendations() {
             var userId = 14; // ID del usuario que quieres consultar
-            var apiUrl = 'ec2-54-164-120-0.compute-1.amazonaws.com:5000/recommendations/' + userId;
+            var apiUrl = 'http://ec2-54-164-120-0.compute-1.amazonaws.com:5000/recommendations/' + userId;
+
+            // Iniciar el cronómetro
+            var startTime = performance.now();
+            $('#loading-time').text('Cargando recomendaciones...'); 
 
             $.get(apiUrl, function(data) {
                 var tableBody = $('#recommendations-table tbody');
@@ -88,6 +88,10 @@
                 } else {
                     $('#message').text('No se encontraron recomendaciones.');
                 }
+                // Calcular el tiempo transcurrido y mostrarlo
+                var endTime = performance.now();
+                var timeTaken = endTime - startTime;
+                $('#loading-time').text('Tiempo de carga: ' + timeTaken.toFixed(2) + ' ms');
             }).fail(function() {
                 console.error('Error al cargar las recomendaciones');
                 $('#message').text('Error al cargar las recomendaciones.');
