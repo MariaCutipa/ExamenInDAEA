@@ -52,11 +52,3 @@ chmod +x manage.sh
 ### 6. Acceso a la Aplicación
 
 Una vez que todos los contenedores estén en funcionamiento, podrás acceder a la aplicación en la URL pública que especificaste en `PUBLIC_IP`.
-
-- **Requisitos**: Lista de herramientas necesarias.
-- **Instrucciones**: Pasos detallados para clonar el repositorio, modificar las IPs, mover el script, ejecutarlo y entender la estructura de los contenedores.
-- **Acceso**: Información sobre cómo acceder a la aplicación una vez en funcionamiento.
-- **Notas**: Advertencias importantes.
-- **Contribuciones**: Cómo contribuir al proyecto.
-
-Si necesitas realizar alguna modificación adicional o agregar más información, házmelo saber. ¡Espero que esto te sirva! 😊
